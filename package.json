@@ -1,0 +1,15 @@
+{
+  "name": "linter-scss-lint",
+  "main": "./lib/init",
+  "version": "0.0.0",
+  "linter-package": true,
+  "description": "Linter plugin for SCSS, using scss-lint",
+  "activationEvents": ["linter-scss-lint:toggle"],
+  "repository": "https://github.com/atom/linter-scss-lint",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}

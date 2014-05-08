@@ -15,10 +15,10 @@ class LinterScssLint extends Linter
   linterName: 'scss-lint'
 
   # A regex pattern used to extract information from the executable's output.
-  # regex: '<issue line="11" column="3" length="15" severity="warning" reason="'
   regex: 'line="(?<line>\\d+)" column="(?<col>\\d+)" .*? severity="((?<error>error)|(?<warning>warning))" reason="(?<message>.*?)"'
 
   constructor: (editorView)->
-    @executablePath = atom.config.get 'linter-scss-lint.scssLintExecutablePath'
+    atom.config.observe 'linter-scss-lint.scssLintExecutablePath', =>
+      @executablePath = atom.config.get 'linter-scss-lint.scssLintExecutablePath'
 
 module.exports = LinterScssLint

@@ -1,7 +1,7 @@
 {
   "name": "linter-scss-lint",
   "main": "./lib/init",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "linter-package": true,
   "description": "Linter plugin for SCSS, using scss-lint",
   "activationEvents": [

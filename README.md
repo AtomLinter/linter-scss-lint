@@ -28,6 +28,7 @@ You can configure linter-scss-lint by editing ~/.atom/config.cson (choose Open Y
 ```
 'linter-scss-lint':
   'scssLintExecutablePath': null #scss-lint path. run 'which scss-lint' to find the path
+  'scssLintExcludedLinters': [] # a list of linters to exclude from running. run 'scss-lint --show-linters' to see a list of linters that can be excluded.
 ```
 
 ## Contributing

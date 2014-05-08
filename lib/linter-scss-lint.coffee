@@ -21,4 +21,18 @@ class LinterScssLint extends Linter
     atom.config.observe 'linter-scss-lint.scssLintExecutablePath', =>
       @executablePath = atom.config.get 'linter-scss-lint.scssLintExecutablePath'
 
+    atom.config.observe 'linter-scss-lint.scssLintExcludedLinters', =>
+      @updateCommand()
+
+  destroy: ->
+    atom.config.unobserve 'linter-scss-lint.scssLintExcludedLinters'
+
+  updateCommand: ->
+    excludedLinters = atom.config.get 'linter-scss-lint.scssLintExcludedLinters'
+
+    if excludedLinters and excludedLinters.length > 0
+      @cmd = "scss-lint --format=XML --exclude-linter=#{excludedLinters.toString()}"
+    else
+      @cmd = 'scss-lint --format=XML'
+
 module.exports = LinterScssLint

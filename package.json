@@ -3,7 +3,7 @@
   "main": "./lib/init",
   "version": "0.0.4",
   "linter-package": true,
-  "description": "Linter plugin for SCSS, using scss-lint",
+  "description": "Lint SCSS on the fly, using scss-lint",
   "activationEvents": [
     "linter-scss-lint:toggle"
   ],

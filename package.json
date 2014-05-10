@@ -4,9 +4,6 @@
   "version": "0.0.5",
   "linter-package": true,
   "description": "Lint SCSS on the fly, using scss-lint",
-  "activationEvents": [
-    "linter-scss-lint:toggle"
-  ],
   "repository": "https://github.com/AtomLinter/linter-scss-lint",
   "license": "MIT",
   "engines": {

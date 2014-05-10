@@ -3,6 +3,7 @@
   "main": "./lib/init",
   "version": "0.0.6",
   "linter-package": true,
+  "activationEvents": [],
   "description": "Lint SCSS on the fly, using scss-lint",
   "repository": "https://github.com/AtomLinter/linter-scss-lint",
   "license": "MIT",

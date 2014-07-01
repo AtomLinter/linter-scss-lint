@@ -1,5 +1,7 @@
 linterPath = atom.packages.getLoadedPackage("linter").path
 Linter = require "#{linterPath}/lib/linter"
+findFile = require "#{linterPath}/lib/util"
+
 
 class LinterScssLint extends Linter
   # The syntax that the linter handles. May be a string or
@@ -37,5 +39,9 @@ class LinterScssLint extends Linter
       @cmd = "scss-lint --format=XML --exclude-linter=#{excludedLinters.toString()}"
     else
       @cmd = 'scss-lint --format=XML'
+
+    config = findFile @cwd, ['.scss-lint.yml']
+    if config
+      @cmd += " -c #{config}"
 
 module.exports = LinterScssLint

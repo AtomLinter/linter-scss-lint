@@ -31,6 +31,10 @@ You can configure linter-scss-lint by editing ~/.atom/config.cson (choose Open Y
   'scssLintExcludedLinters': [] # a list of linters to exclude from running. run 'scss-lint --show-linters' to see a list of linters that can be excluded.
 ```
 
+## Config file
+Linter will start looking for `.scss-lint.yml` file in the same directory as the file that's being linted. If not found, it will move one level up the directory tree all the way up to the filesystem root. 
+
+
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
 

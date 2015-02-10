@@ -44,4 +44,19 @@ class LinterScssLint extends Linter
     if config
       @cmd += " -c #{config}"
 
+  formatMessage: (match) ->
+    map = {
+      quot: '"'
+      amp: '&'
+      lt: '<'
+      gt: '>'
+    }
+
+    message = match.message
+    for key,value of map
+        regex = new RegExp '&' + key + ';', 'g'
+        message = message.replace(regex, value)
+
+    return message
+
 module.exports = LinterScssLint

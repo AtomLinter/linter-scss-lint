@@ -1,7 +1,7 @@
 module.exports =
   configDefaults:
-    scssLintExecutablePath: null
-    scssLintExcludedLinters: null
+    scssLintExecutablePath: ''
+    scssLintExcludedLinters: []
 
   activate: ->
     console.log 'activate linter-scss-lint'

@@ -29,8 +29,8 @@ class LinterScssLint extends Linter
       @updateCommand()
 
   destroy: ->
-    atom.config.unobserve 'linter-scss-lint.scssLintExecutablePath'
-    atom.config.unobserve 'linter-scss-lint.scssLintExcludedLinters'
+    atom.config.dispose 'linter-scss-lint.scssLintExecutablePath'
+    atom.config.dispose 'linter-scss-lint.scssLintExcludedLinters'
 
   updateCommand: ->
     excludedLinters = atom.config.get 'linter-scss-lint.scssLintExcludedLinters'

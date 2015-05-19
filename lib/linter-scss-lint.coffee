@@ -1,6 +1,7 @@
 linterPath = atom.packages.getLoadedPackage("linter").path
 Linter = require "#{linterPath}/lib/linter"
 findFile = require "#{linterPath}/lib/util"
+{CompositeDisposable} = require "atom"
 
 
 class LinterScssLint extends Linter
@@ -22,15 +23,16 @@ class LinterScssLint extends Linter
   constructor: (editor)->
     super(editor)
 
-    atom.config.observe 'linter-scss-lint.scssLintExecutablePath', =>
+    @disposables = new CompositeDisposable
+
+    @disposables.add atom.config.observe 'linter-scss-lint.scssLintExecutablePath', =>
       @executablePath = atom.config.get 'linter-scss-lint.scssLintExecutablePath'
 
-    atom.config.observe 'linter-scss-lint.scssLintExcludedLinters', =>
+    @disposables.add atom.config.observe 'linter-scss-lint.scssLintExcludedLinters', =>
       @updateCommand()
 
   destroy: ->
-    atom.config.unobserve 'linter-scss-lint.scssLintExecutablePath'
-    atom.config.unobserve 'linter-scss-lint.scssLintExcludedLinters'
+    @disposables.dispose()
 
   updateCommand: ->
     excludedLinters = atom.config.get 'linter-scss-lint.scssLintExcludedLinters'

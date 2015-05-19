@@ -1,9 +1,11 @@
 module.exports =
   config:
-    scssLintExecutablePath:
+    executablePath:
+      title: 'Scss-lint Executable Path'
+      description: 'The path where scss-lint is located'
       type: 'string'
       default: ''
-    scssLintExcludedLinters:
+    excludedLinters:
       type: 'array'
       default: []
       items:

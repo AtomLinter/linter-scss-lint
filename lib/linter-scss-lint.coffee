@@ -10,6 +10,10 @@ class LinterScssLint extends Linter
 
   linterName: 'scss-lint'
 
+  # A string, list, tuple or callable that returns a string, list or tuple,
+  # containing the command line (with arguments) used to lint.
+  cmd: 'scss-lint --format=XML'
+
   # A regex pattern used to extract information from the executable's output.
   regex: 'line="(?<line>\\d+)" column="(?<col>\\d+)" .*? severity="((?<error>error)|(?<warning>warning))" reason="(?<message>.*?)"'
 
@@ -34,8 +38,8 @@ class LinterScssLint extends Linter
 
     message = match.message
     for key,value of map
-        regex = new RegExp '&' + key + ';', 'g'
-        message = message.replace(regex, value)
+      regex = new RegExp '&' + key + ';', 'g'
+      message = message.replace(regex, value)
 
     return message
 

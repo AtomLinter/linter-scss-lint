@@ -1,7 +1,7 @@
 {
   "name": "linter-scss-lint",
   "main": "./lib/init",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "linter-package": true,
   "description": "Lint SCSS on the fly, using scss-lint",
   "repository": "https://github.com/AtomLinter/linter-scss-lint",

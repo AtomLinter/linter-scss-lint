@@ -10,15 +10,13 @@ class LinterScssLint extends Linter
 
   linterName: 'scss-lint'
 
-  # A string, list, tuple or callable that returns a string, list or tuple,
-  # containing the command line (with arguments) used to lint.
-  cmd: 'scss-lint --format=XML'
+  options: ['excludedLinters', 'executablePath']
 
   # A regex pattern used to extract information from the executable's output.
   regex: 'line="(?<line>\\d+)" column="(?<col>\\d+)" .*? severity="((?<error>error)|(?<warning>warning))" reason="(?<message>.*?)"'
 
   updateOption: (option) =>
-    super(options)
+    super(option)
 
     # build cmd
     @cmd = 'scss-lint --format=XML'

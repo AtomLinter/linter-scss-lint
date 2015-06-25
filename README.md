@@ -19,10 +19,14 @@ Before using this plugin, you must ensure that `scss-lint` is installed on your 
 
 1. Install [ruby](https://www.ruby-lang.org/).
 
-2. Install [scss-lint](https://github.com/causes/scss-lint) by typing the following in a terminal:
+2. Install [scss_lint](https://github.com/causes/scss-lint) by typing the following in a terminal:
    ```
-   gem install scss-lint
+   gem install scss_lint
    ```
+3. Install [scss_scss_lint_reporter_checkstyle](https://github.com/Sweetchuck/scss_lint_reporter_checkstyle) by typing the following in a terminal
+    ```
+    gem install scss_lint_reporter_checkstyle
+    ```
 
 Now you can proceed to install the linter-scss-lint plugin.
 

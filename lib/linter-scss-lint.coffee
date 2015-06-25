@@ -18,8 +18,10 @@ class LinterScssLint extends Linter
   updateOption: (option) =>
     super(option)
 
+    @executablePath = atom.config.get 'linter-scss-lint.executablePath'
+
     # build cmd
-    @cmd = 'scss-lint --format=XML --require=scss_lint_reporter_checkstyle --format=Checkstyle'
+    @cmd = 'scss-lint --require=scss_lint_reporter_checkstyle --format=Checkstyle'
     @cmd += " --exclude-linter=#{@excludedLinters.toString()}" if @excludedLinters and @excludedLinters.length > 0
 
     config = findFile @cwd, ['.scss-lint.yml']

@@ -21,7 +21,7 @@ Before using this plugin, you must ensure that `scss-lint` is installed on your 
 
 2. Install [scss-lint](https://github.com/causes/scss-lint) by typing the following in a terminal:
    ```
-   gem install scss-lint
+   gem install scss_lint
    ```
 
 Now you can proceed to install the linter-scss-lint plugin.

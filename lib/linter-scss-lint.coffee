@@ -1,44 +1,45 @@
 linterPath = atom.packages.getLoadedPackage("linter").path
 Linter = require "#{linterPath}/lib/linter"
-findFile = require "#{linterPath}/lib/util"
-
+{findFile} = require "#{linterPath}/lib/utils"
+{Range} = require 'atom'
 
 class LinterScssLint extends Linter
-  # The syntax that the linter handles. May be a string or
-  # list/tuple of strings. Names should be all lowercase.
   @syntax: 'source.css.scss'
 
   linterName: 'scss-lint'
 
-  options: ['excludedLinters', 'executablePath']
+  cmd: 'scss-lint --format JSON'
 
-  # A regex pattern used to extract information from the executable's output.
-  regex: 'line="(?<line>\\d+)" column="(?<col>\\d+)" .*? severity="((?<error>error)|(?<warning>warning))" reason="(?<message>.*?)"'
+  options: ['additionalArguments', 'executablePath']
 
-  updateOption: (option) =>
-    super(option)
-
-    # build cmd
-    @cmd = 'scss-lint --format=XML'
-    @cmd += " --exclude-linter=#{@excludedLinters.toString()}" if @excludedLinters and @excludedLinters.length > 0
-
-    config = findFile @cwd, ['.scss-lint.yml']
-    if config
-      @cmd += " -c #{config}"
-
-  formatMessage: (match) ->
-    map = {
-      quot: '"'
-      amp: '&'
-      lt: '<'
-      gt: '>'
+  beforeSpawnProcess: (command, args, options) ->
+    {
+      command,
+      args: args.slice(0, -1).concat(
+        if config = findFile @cwd, '.scss-lint.yml' then ['-c', config] else []
+        if @additionalArguments then @additionalArguments.split(' ') else []
+        args.slice(-1)
+      )
+      options
     }
 
-    message = match.message
-    for key,value of map
-      regex = new RegExp '&' + key + ';', 'g'
-      message = message.replace(regex, value)
+  processMessage: (message, cb) ->
+    try
+      files = JSON.parse(message) || {}
+    catch
+      return cb [@createMessage {reason: message}]
 
-    return message
+    cb(@createMessage lint for lint in files[Object.keys(files)[0]] || [])
+
+  createMessage: (lint) ->
+    {
+      line: line = (lint.line || 1) - 1,
+      col: col = (lint.column || 1) - 1,
+      level: lint.severity || 'error',
+      message: (lint.reason || 'Unknown Error') +
+        (if lint.linter then " (#{lint.linter})" else ''),
+      linter: @linterName,
+      range: new Range([line, col], [line, col + (lint.length || 0)])
+    }
 
 module.exports = LinterScssLint

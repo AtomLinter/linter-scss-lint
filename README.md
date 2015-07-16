@@ -26,7 +26,7 @@ Before using this plugin, you must ensure that `scss-lint` is installed on your 
 
 Now you can proceed to install the linter-scss-lint plugin.
 
-### Plugin installationd
+### Plugin installation
 ```
 $ apm install linter-scss-lint
 ```

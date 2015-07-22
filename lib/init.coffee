@@ -40,7 +40,7 @@ module.exports =
             args: [
               filePath,
               @additionalArguments.split(' ')...,
-              if config then "-c=#{config}"
+              if config then "-c#{config}",
               "--format=JSON" ]
             stdout: (data) ->
               resultJson.push data
@@ -49,13 +49,13 @@ module.exports =
               lint = try JSON.parse resultJson.join("\n")
               return resolve [] unless lint?
               resolve lint[filePath].map (msg) ->
-                line = (lint.line || 1) - 1
-                col = (lint.column || 1) - 1
-                type: lint.severity || 'error',
-                text: (lint.reason || 'Unknown Error') +
-                  (if lint.linter then " (#{lint.linter})" else ''),
+                line = (msg.line || 1) - 1
+                col = (msg.column || 1) - 1
+                type: msg.severity || 'error',
+                text: (msg.reason || 'Unknown Error') +
+                  (if msg.linter then " (#{msg.linter})" else ''),
                 filePath: filePath,
-                range: new Range([line, col], [line, col + (lint.length || 0)])
+                range: new Range([line, col], [line, col + (msg.length || 0)])
 
           process.onWillThrowError ({error,handle}) ->
             atom.notifications.addError "Failed to run #{@executablePath}",

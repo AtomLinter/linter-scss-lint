@@ -31,35 +31,26 @@ module.exports =
       scope: 'file'
       lintOnFly: false
       lint: (editor) =>
+        helpers = require("atom-linter")
         return new Promise (resolve, reject) =>
           filePath = editor.getPath()
-          resultJson = []
           config = findFile path.dirname(filePath), '.scss-lint.yml'
-          process = new BufferedProcess
-            command: @executablePath
-            args: [
-              filePath,
-              @additionalArguments.split(' ')...,
-              if config then "-c#{config}",
-              "--format=JSON" ]
-            stdout: (data) ->
-              resultJson.push data
-            exit: (code) ->
-              resolve [] unless code isnt 0
-              lint = try JSON.parse resultJson.join("\n")
-              return resolve [] unless lint?
-              resolve lint[filePath].map (msg) ->
-                line = (msg.line || 1) - 1
-                col = (msg.column || 1) - 1
-                type: msg.severity || 'error',
-                text: (msg.reason || 'Unknown Error') +
-                  (if msg.linter then " (#{msg.linter})" else ''),
-                filePath: filePath,
-                range: new Range([line, col], [line, col + (msg.length || 0)])
-
-          process.onWillThrowError ({error,handle}) ->
-            atom.notifications.addError "Failed to run #{@executablePath}",
-              detail: "#{error.message}"
-              dismissable: true
-            handle()
-            resolve []
+          params = [
+            filePath,
+            @additionalArguments.split(' ')...,
+            if config then "-c#{config}",
+            "--format=JSON" ]
+          helpers.exec(@executablePath, params).then (stdout) ->
+            lint = try JSON.parse stdout
+            reject [] unless lint?
+            resolve lint[filePath].map (msg) ->
+              line = (msg.line || 1) - 1
+              col = (msg.column || 1) - 1
+              
+              type: msg.severity || 'error',
+              text: (msg.reason || 'Unknown Error') +
+                (if msg.linter then " (#{msg.linter})" else ''),
+              filePath: filePath,
+              range: [[line, col], [line, col + (msg.length || 0)]]
+          .catch (error) ->
+            reject(error)

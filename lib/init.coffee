@@ -38,6 +38,9 @@ module.exports =
           if config? then "--config=#{config}",
           @additionalArguments.split(' ')...
         ].filter((e) -> e)
+        throw new TypeError(
+          "Error linting #{filePath}: No 'scss-lint' executable specified"
+        ) if @executablePath is ''
         return helpers.exec(@executablePath, params).then (stdout) ->
           lint = try JSON.parse stdout
           throw new TypeError(stdout) unless lint?

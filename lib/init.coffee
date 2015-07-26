@@ -1,6 +1,5 @@
-{BufferedProcess, CompositeDisposable} = require 'atom'
-linterPath = atom.packages.resolvePackagePath("linter")
-{findFile} = require "#{linterPath}/lib/utils"
+{CompositeDisposable} = require 'atom'
+{findFile, exec} = helpers = require "atom-linter"
 path = require 'path'
 
 module.exports =
@@ -31,7 +30,6 @@ module.exports =
       scope: 'file'
       lintOnFly: false
       lint: (editor) =>
-        helpers = require "atom-linter"
         filePath = editor.getPath()
         config = findFile path.dirname(filePath), '.scss-lint.yml'
         params = [
@@ -40,23 +38,16 @@ module.exports =
           if config? then "--config=#{config}",
           @additionalArguments.split(' ')...
         ].filter((e) -> e)
-        return helpers.exec(@executablePath, params).then (stdout) =>
+        return helpers.exec(@executablePath, params).then (stdout) ->
           lint = try JSON.parse stdout
-          unless lint?
-            atom.notifications.addError "Error running #{@executablePath}",
-            detail: "#{stdout}"
-            return []
-          if lint[filePath]?
-            return lint[filePath].map (msg) ->
-              line = (msg.line || 1) - 1
-              col = (msg.column || 1) - 1
+          throw new TypeError(stdout) unless lint?
+          return [] unless lint[filePath]
+          return lint[filePath].map (msg) ->
+            line = (msg.line || 1) - 1
+            col = (msg.column || 1) - 1
 
-              type: msg.severity || 'error',
-              text: (msg.reason || 'Unknown Error') +
-                (if msg.linter then " (#{msg.linter})" else ''),
-              filePath: filePath,
-              range: [[line, col], [line, col + (msg.length || 0)]]
-          else return []
-        .catch (error) =>
-          atom.notifications.addError "Error running #{@executablePath}",
-            detail: "#{error.message}"
+            type: msg.severity || 'error',
+            text: (msg.reason || 'Unknown Error') +
+              (if msg.linter then " (#{msg.linter})" else ''),
+            filePath: filePath,
+            range: [[line, col], [line, col + (msg.length || 0)]]

@@ -26,7 +26,7 @@ module.exports =
     @subs.dispose()
   provideLinter: ->
     provider =
-      grammarScopes: ['source.css.scss']
+      grammarScopes: ['source.css.scss', 'source.scss']
       scope: 'file'
       lintOnFly: false
       lint: (editor) =>

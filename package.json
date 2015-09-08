@@ -6,10 +6,10 @@
   "repository": "https://github.com/AtomLinter/linter-scss-lint",
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=1.0.0"
   },
   "dependencies": {
-    "atom-linter": "~3.0.0"
+    "atom-linter": "^3.2.0"
   },
   "providedServices": {
     "linter": {

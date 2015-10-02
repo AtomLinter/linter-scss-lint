@@ -5,6 +5,9 @@
   "description": "Lint SCSS on the fly, using scss-lint",
   "repository": "https://github.com/AtomLinter/linter-scss-lint",
   "license": "MIT",
+  "scripts": {
+    "lint": "./node_modules/.bin/coffeelint ./lib"
+  },
   "engines": {
     "atom": ">=1.0.0"
   },
@@ -17,5 +20,8 @@
         "1.1.0": "provideLinter"
       }
     }
+  },
+  "devDependencies": {
+    "coffeelint": "^1.12.1"
   }
 }

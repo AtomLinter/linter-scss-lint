@@ -1,8 +1,9 @@
 linter-scss-lint
 =========================
+[![Build Status](https://travis-ci.org/AtomLinter/linter-scss-lint.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-scss-lint)
+[![Dependency Status](https://david-dm.org/AtomLinter/linter-scss-lint.svg)](https://david-dm.org/AtomLinter/linter-scss-lint)
 [![Plugin installs!](https://img.shields.io/apm/dm/linter-scss-lint.svg)](https://atom.io/packages/linter-scss-lint)
 [![Package version!](https://img.shields.io/apm/v/linter-scss-lint.svg?style=flat)](https://atom.io/packages/linter-scss-lint)
-[![Dependency Status](https://david-dm.org/AtomLinter/linter-scss-lint.svg)](https://david-dm.org/AtomLinter/linter-scss-lint)
 
 This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [scss-lint](https://github.com/causes/scss-lint). It will be used with files that have the “SCSS” syntax.
 

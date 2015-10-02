@@ -14,7 +14,7 @@ module.exports =
       default: ''
 
   activate: ->
-    console.log 'activate linter-scss-lint'
+    require('atom-package-deps').install require('../package.json').name
     @subs = new CompositeDisposable
     @subs.add atom.config.observe 'linter-scss-lint.executablePath',
       (executablePath) =>
@@ -22,8 +22,10 @@ module.exports =
     @subs.add atom.config.observe 'linter-scss-lint.additionalArguments',
       (additionalArguments) =>
         @additionalArguments = additionalArguments
+
   deactivate: ->
     @subs.dispose()
+
   provideLinter: ->
     provider =
       grammarScopes: ['source.css.scss', 'source.scss']

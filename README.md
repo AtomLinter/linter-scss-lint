@@ -8,7 +8,7 @@ linter-scss-lint
 This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [scss-lint](https://github.com/causes/scss-lint). It will be used with files that have the “SCSS” syntax.
 
 ### Installation
-Linter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).
+Linter package will automatically be installed for you if you do not already have it.
 
 #### scss-lint installation
 Before using this plugin, you must ensure that `scss-lint` is installed on your system. To install `scss-lint`, do the following:

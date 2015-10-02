@@ -31,8 +31,9 @@ module.exports =
       lintOnFly: yes
       lint: (editor) =>
         filePath = editor.getPath()
+        cwd = path.dirname(filePath)
         tempFile path.basename(filePath), editor.getText(), (tmpFilePath) =>
-          config = findFile path.dirname(filePath), '.scss-lint.yml'
+          config = findFile cwd, '.scss-lint.yml'
           params = [
             tmpFilePath,
             "--format=JSON",
@@ -42,7 +43,7 @@ module.exports =
           throw new TypeError(
             "Error linting #{filePath}: No 'scss-lint' executable specified"
           ) if @executablePath is ''
-          return helpers.exec(@executablePath, params).then (stdout) ->
+          return helpers.exec(@executablePath, params, {cwd}).then (stdout) ->
             lint = try JSON.parse stdout
             throw new TypeError(stdout) unless lint?
             return [] unless lint[tmpFilePath]

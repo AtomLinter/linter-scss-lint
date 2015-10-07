@@ -11,7 +11,7 @@ module.exports =
     executablePath:
       title: 'Executable Path'
       type: 'string'
-      default: ''
+      default: 'scss-lint'
 
   activate: ->
     require('atom-package-deps').install require('../package.json').name
@@ -42,9 +42,6 @@ module.exports =
             if config? then "--config=#{config}",
             @additionalArguments.split(' ')...
           ].filter((e) -> e)
-          throw new TypeError(
-            "Error linting #{filePath}: No 'scss-lint' executable specified"
-          ) if @executablePath is ''
           return helpers.exec(@executablePath, params, {cwd}).then (stdout) ->
             lint = try JSON.parse stdout
             throw new TypeError(stdout) unless lint?

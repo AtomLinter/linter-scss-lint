@@ -57,7 +57,7 @@ Consult rvm docs for further info not covered in this README - https://rvm.io/
 This will create a wrapper just for atom using your current ruby version:
 
 ```bash
-$ rvm wrapper current atom scss_lint
+$ rvm wrapper current atom scss-lint
 ```
 
 Then in `linter-scss-lint` set `executablePath` to `/path/to/rvm/bin/atom_scss-lint`

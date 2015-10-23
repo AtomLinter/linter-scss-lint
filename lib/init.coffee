@@ -8,6 +8,10 @@ module.exports =
       title: 'Additional Arguments'
       type: 'string'
       default: ''
+    disableWhenNoConfigFileInPath:
+      type: 'boolean'
+      default: false
+      description: 'Disable linter when no `.scss-lint.yml` is found in project'
     executablePath:
       title: 'Executable Path'
       type: 'string'
@@ -34,8 +38,13 @@ module.exports =
       lint: (editor) =>
         filePath = editor.getPath()
         cwd = path.dirname(filePath)
+
+        disableOnNoConfig = atom.config.get 'linter-eslint.disableWhenNoEslintrcFileInPath'
+        config = findFile cwd, '.scss-lint.yml'
+
+        return [] if disableOnNoConfig and not config
+
         tempFile path.basename(filePath), editor.getText(), (tmpFilePath) =>
-          config = findFile cwd, '.scss-lint.yml'
           params = [
             tmpFilePath,
             '--format=JSON',

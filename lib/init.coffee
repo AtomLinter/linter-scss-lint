@@ -26,6 +26,9 @@ module.exports =
     @subs.add atom.config.observe 'linter-scss-lint.additionalArguments',
       (additionalArguments) =>
         @additionalArguments = additionalArguments
+    @subs.add atom.config.observe 'linter-scss-lint.disableWhenNoConfigFileInPath',
+      (disableOnNoConfig) =>
+        @disableOnNoConfig = disableOnNoConfig
 
   deactivate: ->
     @subs.dispose()
@@ -39,10 +42,9 @@ module.exports =
         filePath = editor.getPath()
         cwd = path.dirname(filePath)
 
-        disableOnNoConfig = atom.config.get 'linter-eslint.disableWhenNoEslintrcFileInPath'
         config = findFile cwd, '.scss-lint.yml'
 
-        return [] if disableOnNoConfig and not config
+        return [] if @disableOnNoConfig and not config
 
         tempFile path.basename(filePath), editor.getText(), (tmpFilePath) =>
           params = [

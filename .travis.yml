@@ -5,4 +5,7 @@ notifications:
   on_success: never
   on_failure: change
 
+before_install:
+  - gem install scss_lint
+
 script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'

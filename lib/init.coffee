@@ -1,5 +1,5 @@
 {CompositeDisposable} = require 'atom'
-{findFile, exec, tempFile} = helpers = require 'atom-linter'
+{find, exec, tempFile} = helpers = require 'atom-linter'
 path = require 'path'
 
 module.exports =
@@ -18,7 +18,7 @@ module.exports =
       default: 'scss-lint'
 
   activate: ->
-    require('atom-package-deps').install require('../package.json').name
+    require('atom-package-deps').install()
     @subs = new CompositeDisposable
     @subs.add atom.config.observe 'linter-scss-lint.executablePath',
       (executablePath) =>
@@ -42,7 +42,7 @@ module.exports =
         filePath = editor.getPath()
         cwd = path.dirname(filePath)
 
-        config = findFile cwd, '.scss-lint.yml'
+        config = find cwd, '.scss-lint.yml'
 
         return [] if @disableOnNoConfig and not config
 

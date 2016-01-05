@@ -32,12 +32,13 @@ describe('The scss_lint provider for Linter', () => {
     });
 
     it('verifies the first message', () => {
+      const messageText = 'Syntax Error: Invalid CSS after "body {": expected "}", was ""';
       waitsForPromise(() => {
         return lint(editor).then(messages => {
           expect(messages[0].type).toBeDefined();
           expect(messages[0].type).toEqual('error');
           expect(messages[0].text).toBeDefined();
-          expect(messages[0].text).toEqual('Syntax Error: Invalid CSS after "body {": expected "}", was ""');
+          expect(messages[0].text).toEqual(messageText);
           expect(messages[0].filePath).toBeDefined();
           expect(messages[0].filePath).toMatch(/.+bad\.scss$/);
           expect(messages[0].range).toBeDefined();

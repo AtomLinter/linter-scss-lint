@@ -35,6 +35,7 @@ module.exports =
 
   provideLinter: ->
     provider =
+      name: 'scss-lint'
       grammarScopes: ['source.css.scss', 'source.scss']
       scope: 'file'
       lintOnFly: yes

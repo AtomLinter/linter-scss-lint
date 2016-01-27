@@ -1,11 +1,44 @@
-language: objective-c
+language: ruby
+
+sudo: false
+
+matrix:
+  include:
+    - os: osx
+      env: ATOM_CHANNEL=stable
+    - os: osx
+      env: ATOM_CHANNEL=beta
+    - os: linux
+      rvm: 2.2.4
+      env: ATOM_CHANNEL=stable
+    - os: linux
+      rvm: 2.2.4
+      env: ATOM_CHANNEL=beta
+
+branches:
+  only:
+    - master
+git:
+  depth: 10
 
 notifications:
   email:
-  on_success: never
-  on_failure: change
+    on_success: never
+    on_failure: change
 
-before_install:
+install:
   - gem install scss_lint
 
+before_script:
+  - ruby --version
+  - scss-lint --version
+
 script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
+
+addons:
+  apt:
+    packages:
+    - build-essential
+    - git
+    - libgnome-keyring-dev
+    - fakeroot

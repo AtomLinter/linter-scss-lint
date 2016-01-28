@@ -5,7 +5,7 @@ linter-scss-lint
 [![Plugin installs!](https://img.shields.io/apm/dm/linter-scss-lint.svg)](https://atom.io/packages/linter-scss-lint)
 [![Package version!](https://img.shields.io/apm/v/linter-scss-lint.svg?style=flat)](https://atom.io/packages/linter-scss-lint)
 
-This linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [scss-lint](https://github.com/causes/scss-lint). It will be used with files that have the “SCSS” syntax.
+This linter plugin for [Linter](https://github.com/atom-community/linter) provides an interface to [scss-lint](https://github.com/brigade/scss-lint). It will be used with files that have the “SCSS” syntax.
 
 ### Installation
 Linter package will automatically be installed for you if you do not already have it.

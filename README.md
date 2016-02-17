@@ -84,6 +84,16 @@ $ rvm wrapper current
 
 Then in `linter-scss-lint` set `executablePath` to `/path/to/rvm/gems/ruby-x.y.z/wrappers/scss-lint`
 
+### Using `rbenv`
+
+If you're using rbenv, you need to make sure your PATH is set correctly for Atom.  You can do this inside of the `~/.atom/init.coffee` file.
+
+Add a line like this for rbenv (thanks to https://github.com/willcosgrove/atom-ruby-bundler readme):
+
+```coffee
+process.env.PATH = "#{process.env.HOME}/.rbenv/shims:#{process.env.HOME}/.rbenv/bin:#{process.env.PATH}"
+```
+
 
 ### Contributing
 If you would like to contribute enhancements or fixes, please do the following:

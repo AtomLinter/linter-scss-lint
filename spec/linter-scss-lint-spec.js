@@ -22,7 +22,7 @@ describe('The scss_lint provider for Linter', () => {
     let editor = null;
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(badPath).then(openEditor => editor = openEditor)
+        atom.workspace.open(badPath).then(openEditor => { editor = openEditor; })
       );
     });
 

@@ -18,7 +18,6 @@
   "devDependencies": {
     "coffeelint": "^1.15.0",
     "eslint": "^2.5.3",
-    "babel-eslint": "^5.0.0",
     "eslint-config-airbnb": "^6.0.2"
   },
   "package-deps": [
@@ -33,7 +32,6 @@
   },
   "eslintConfig": {
     "extends": "airbnb/base",
-    "parser": "babel-eslint",
     "globals": {
       "atom": true
     },

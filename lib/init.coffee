@@ -33,6 +33,12 @@ module.exports =
   deactivate: ->
     @subs.dispose()
 
+  getRelativePath: (filePath, configPath) ->
+    if configPath
+      path.relative(path.dirname(configPath), filePath)
+    else
+      atom.project.relativizePath(filePath)[1]
+
   provideLinter: ->
     provider =
       name: 'scss-lint'
@@ -47,10 +53,12 @@ module.exports =
 
         config = find cwd, '.scss-lint.yml'
 
+        relativeFilePath = this.getRelativePath(filePath, config)
+
         return [] if @disableOnNoConfig and not config
 
         params = [
-          "--stdin-file-path=#{filePath}",
+          "--stdin-file-path=#{relativeFilePath}",
           '--format=JSON',
           if config? then "--config=#{config}",
           @additionalArguments.split(' ')...
@@ -58,8 +66,8 @@ module.exports =
         return helpers.exec(@executablePath, params, {stdin: fileText, cwd}).then (stdout) ->
           lint = try JSON.parse stdout
           throw new TypeError(stdout) unless lint?
-          return [] unless lint[filePath]
-          return lint[filePath].map (msg) ->
+          return [] unless lint[relativeFilePath]
+          return lint[relativeFilePath].map (msg) ->
             line = (msg.line or 1) - 1
             col = (msg.column or 1) - 1
 

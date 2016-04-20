@@ -33,11 +33,11 @@ module.exports =
   deactivate: ->
     @subs.dispose()
 
-  getRelativePath: (filePath, configPath) ->
+  getRelativeFilePath: (filePath, configPath) ->
     if configPath
       path.relative(path.dirname(configPath), filePath)
     else
-      atom.project.relativizePath(filePath)[1]
+      filePath
 
   provideLinter: ->
     provider =
@@ -49,30 +49,47 @@ module.exports =
         filePath = editor.getPath()
         fileText = editor.getText()
 
-        cwd = path.dirname(filePath)
+        return [] if fileText.length is 0
 
-        config = find cwd, '.scss-lint.yml'
-
-        relativeFilePath = this.getRelativePath(filePath, config)
+        config = find filePath, '.scss-lint.yml'
+        relativeFilePath = @getRelativeFilePath(filePath, config)
 
         return [] if @disableOnNoConfig and not config
 
+        cwd = path.dirname(filePath)
         params = [
           "--stdin-file-path=#{relativeFilePath}",
           '--format=JSON',
           if config? then "--config=#{config}",
           @additionalArguments.split(' ')...
         ].filter((e) -> e)
-        return helpers.exec(@executablePath, params, {stdin: fileText, cwd}).then (stdout) ->
-          lint = try JSON.parse stdout
-          throw new TypeError(stdout) unless lint?
-          return [] unless lint[relativeFilePath]
-          return lint[relativeFilePath].map (msg) ->
-            line = (msg.line or 1) - 1
-            col = (msg.column or 1) - 1
 
-            type: msg.severity or 'error',
-            text: (msg.reason or 'Unknown Error') +
-              (if msg.linter then " (#{msg.linter})" else ''),
-            filePath: filePath,
-            range: [[line, col], [line, col + (msg.length or 0)]]
+        return helpers.exec(@executablePath, params, {stdin: fileText, cwd})
+          .then (output) ->
+            regex = /^invalid option: --stdin-file-path\=/g
+            if regex.exec(output)
+              atom.notifications.addError('You are using an old version of scss-lint', {
+                detail: "Please upgrade your version of scss-lint.\nCheck the README for further information.",
+                dismissable: true
+              })
+              return {}
+            else
+              return JSON.parse(output)
+          .then (contents) ->
+            return [] unless contents[relativeFilePath]
+            return contents[relativeFilePath].map (msg) ->
+              # Atom expects ranges to be 0-based
+              line = (msg.line or 1) - 1
+              col = (msg.column or 1) - 1
+
+              type: msg.severity or 'error',
+              html: "<span class='badge badge-flexible scss-lint'>#{msg.linter or ''}</span> #{msg.reason or 'Unknown Error'}",
+              filePath: filePath,
+              range: [[line, col], [line, col + (msg.length or 0)]]
+          .catch (error) ->
+            console.error('[Linter-SCSS-Lint]', error, output)
+            atom.notifications.addError('[Linter-SCSS-Lint]', {
+              detail: 'SCSS-Lint returned an invalid response, check your console for more info',
+              dismissable: true
+            })
+            return []

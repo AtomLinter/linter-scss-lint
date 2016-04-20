@@ -17,10 +17,9 @@
   },
   "devDependencies": {
     "coffeelint": "^1.15.0",
-    "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^7.0.0",
-    "eslint-plugin-jsx-a11y": "^0.6.2",
-    "eslint-plugin-react": "^4.3.0"
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb-base": "^1.0.0",
+    "eslint-plugin-import": "^1.5.0"
   },
   "package-deps": [
     "linter"
@@ -33,13 +32,16 @@
     }
   },
   "eslintConfig": {
-    "extends": "airbnb/base",
+    "extends": "airbnb-base",
     "globals": {
       "atom": true
     },
     "env": {
       "es6": true,
       "node": true
+    },
+    "rules": {
+      "global-require": 0
     }
   },
   "coffeelintConfig": {

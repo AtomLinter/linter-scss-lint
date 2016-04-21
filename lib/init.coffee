@@ -49,12 +49,12 @@ module.exports =
         filePath = editor.getPath()
         fileText = editor.getText()
 
-        return [] if fileText.length is 0
+        return Promise.resolve([]) if fileText.length is 0
 
         config = find filePath, '.scss-lint.yml'
         relativeFilePath = @getRelativeFilePath(filePath, config)
 
-        return [] if @disableOnNoConfig and not config
+        return Promise.resolve([]) if @disableOnNoConfig and not config
 
         cwd = path.dirname(filePath)
         params = [
@@ -78,13 +78,14 @@ module.exports =
           .then (contents) ->
             return [] unless contents[relativeFilePath]
             return contents[relativeFilePath].map (msg) ->
+              badge = "<span class='badge badge-flexible scss-lint'>#{msg.linter}</span> " if msg.linter
+
               # Atom expects ranges to be 0-based
               line = (msg.line or 1) - 1
               col = (msg.column or 1) - 1
 
               type: msg.severity or 'error',
-              html: "<span class='badge badge-flexible scss-lint'>#{msg.linter or ''}</span>" +
-                    "#{msg.reason or 'Unknown Error'}",
+              html: "#{badge or ''}#{msg.reason or 'Unknown Error'}",
               filePath: filePath,
               range: [[line, col], [line, col + (msg.length or 0)]]
           .catch (error) ->

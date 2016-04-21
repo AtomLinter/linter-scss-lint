@@ -69,7 +69,7 @@ module.exports =
             regex = /^invalid option: --stdin-file-path\=/g
             if regex.exec(output)
               atom.notifications.addError('You are using an old version of scss-lint', {
-                detail: "Please upgrade your version of scss-lint.\nCheck the README for further information.",
+                detail: 'Please upgrade your version of scss-lint.\nCheck the README for further information.',
                 dismissable: true
               })
               return {}
@@ -83,7 +83,8 @@ module.exports =
               col = (msg.column or 1) - 1
 
               type: msg.severity or 'error',
-              html: "<span class='badge badge-flexible scss-lint'>#{msg.linter or ''}</span> #{msg.reason or 'Unknown Error'}",
+              html: "<span class='badge badge-flexible scss-lint'>#{msg.linter or ''}</span>" +
+                    "#{msg.reason or 'Unknown Error'}",
               filePath: filePath,
               range: [[line, col], [line, col + (msg.length or 0)]]
           .catch (error) ->

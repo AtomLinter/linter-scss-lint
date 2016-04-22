@@ -66,15 +66,23 @@ module.exports =
 
         return helpers.exec(@executablePath, params, {stdin: fileText, cwd})
           .then (output) ->
-            regex = /^invalid option: --stdin-file-path\=/g
-            if regex.exec(output)
-              atom.notifications.addError('You are using an old version of scss-lint', {
-                detail: 'Please upgrade your version of scss-lint.\nCheck the README for further information.',
-                dismissable: true
-              })
-              return {}
-            else
+            try
               return JSON.parse(output)
+            catch error
+              regex = /^invalid option: --stdin-file-path\=/g
+              if regex.exec(output)
+                atom.notifications.addError('You are using an old version of scss-lint', {
+                  detail: 'Please upgrade your version of scss-lint.\nCheck the README for further information.',
+                  dismissable: true
+                })
+                return {}
+              else
+                console.error('[Linter-SCSS-Lint]', error, output)
+                atom.notifications.addError('[Linter-SCSS-Lint]', {
+                  detail: 'SCSS-Lint returned an invalid response, check your console for more info',
+                  dismissable: true
+                })
+                return {}
           .then (contents) ->
             return [] unless contents[relativeFilePath]
             return contents[relativeFilePath].map (msg) ->
@@ -88,10 +96,3 @@ module.exports =
               html: "#{badge or ''}#{msg.reason or 'Unknown Error'}",
               filePath: filePath,
               range: [[line, col], [line, col + (msg.length or 0)]]
-          .catch (error) ->
-            console.error('[Linter-SCSS-Lint]', error, output)
-            atom.notifications.addError('[Linter-SCSS-Lint]', {
-              detail: 'SCSS-Lint returned an invalid response, check your console for more info',
-              dismissable: true
-            })
-            return []

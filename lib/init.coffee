@@ -69,7 +69,7 @@ module.exports =
             try
               return JSON.parse(output)
             catch error
-              regex = /^invalid option: --stdin-file-path\=/g
+              regex = /^invalid option: --stdin-file-path\=/
               if regex.exec(output)
                 atom.notifications.addError('You are using an old version of scss-lint', {
                   detail: 'Please upgrade your version of scss-lint.\nCheck the README for further information.',
@@ -79,7 +79,7 @@ module.exports =
               else
                 console.error('[Linter-SCSS-Lint]', error, output)
                 atom.notifications.addError('[Linter-SCSS-Lint]', {
-                  detail: 'SCSS-Lint returned an invalid response, check your console for more info',
+                  detail: 'SCSS-Lint returned an invalid response, check your console for more info.',
                   dismissable: true
                 })
                 return {}
@@ -96,3 +96,16 @@ module.exports =
               html: "#{badge or ''}#{msg.reason or 'Unknown Error'}",
               filePath: filePath,
               range: [[line, col], [line, col + (msg.length or 0)]]
+          .catch (error) ->
+            if error.code is 'ENOENT' and error.syscall.indexOf('spawn') is 0
+              command = path.basename(error.path)
+              atom.notifications.addError("Failed to spawn command `#{command}`.", {
+                detail: "Make sure `#{command}` is installed and on your PATH.",
+                dismissable: true
+              })
+            else
+              atom.notifications.addError('[Linter-SCSS-Lint]', {
+                detail: error.message,
+                dismissable: true
+              })
+            return []

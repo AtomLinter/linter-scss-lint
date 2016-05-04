@@ -2,12 +2,12 @@
 
 import * as path from 'path';
 
+const lint = require(path.join('..', 'lib', 'init')).provideLinter().lint;
+
 const goodPath = path.join(__dirname, 'fixtures', 'good.scss');
 const badPath = path.join(__dirname, 'fixtures', 'bad.scss');
 
 describe('The scss_lint provider for Linter', () => {
-  const lint = require(path.join('..', 'lib', 'init')).provideLinter().lint;
-
   beforeEach(() => {
     atom.workspace.destroyActivePaneItem();
     waitsForPromise(() => {

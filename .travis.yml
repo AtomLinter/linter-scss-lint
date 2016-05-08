@@ -1,39 +1,32 @@
 language: ruby
+rvm:
+  - 2.2.4
 
-sudo: false
+os:
+  - linux
+  - osx
 
-matrix:
-  include:
-    - os: osx
-      env: ATOM_CHANNEL=stable
-    - os: osx
-      env: ATOM_CHANNEL=beta
-    - os: linux
-      rvm: 2.2.4
-      env: ATOM_CHANNEL=stable
-    - os: linux
-      rvm: 2.2.4
-      env: ATOM_CHANNEL=beta
+env:
+  matrix:
+    - ATOM_CHANNEL=stable
+    - ATOM_CHANNEL=beta
 
-branches:
-  only:
-    - master
-git:
-  depth: 10
+install:
+  - gem install scss_lint
+
+before_script:
+  - scss-lint --version
+script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
 
 notifications:
   email:
     on_success: never
     on_failure: change
 
-install:
-  - gem install scss_lint
+git:
+  depth: 10
 
-before_script:
-  - ruby --version
-  - scss-lint --version
-
-script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
+sudo: false
 
 addons:
   apt:
@@ -42,3 +35,7 @@ addons:
     - git
     - libgnome-keyring-dev
     - fakeroot
+
+branches:
+  only:
+    - master

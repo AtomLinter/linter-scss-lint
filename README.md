@@ -1,114 +1,129 @@
-linter-scss-lint
-=========================
-[![Build Status](https://travis-ci.org/AtomLinter/linter-scss-lint.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-scss-lint)
-[![Dependency Status](https://david-dm.org/AtomLinter/linter-scss-lint.svg)](https://david-dm.org/AtomLinter/linter-scss-lint)
-[![Plugin installs!](https://img.shields.io/apm/dm/linter-scss-lint.svg)](https://atom.io/packages/linter-scss-lint)
-[![Package version!](https://img.shields.io/apm/v/linter-scss-lint.svg?style=flat)](https://atom.io/packages/linter-scss-lint)
+# linter-scss-lint
 
-This linter plugin for [Linter](https://github.com/atom-community/linter) provides an interface to [scss-lint](https://github.com/brigade/scss-lint). It will be used with files that have the “SCSS” syntax.
+[![build-status-image]][travis-ci]
+[![dependency-status-image]][david-dm]
+[![package-downloads-image]][atom-package]
+[![package-version-image]][atom-package]
 
-### Installation
-Linter package will automatically be installed for you if you do not already have it.
+This linter plugin for [Linter] provides an interface to [scss-lint]. It will be
+used with files that have the "SCSS" syntax.
 
-#### scss-lint installation
-Before using this plugin, you must ensure that `scss-lint` is installed on your system. To install `scss-lint`, do the following:
+## Installation
 
-1. Install [ruby](https://www.ruby-lang.org/).
+The [Linter] package will be installed for you to provide an interface to this
+package. If you are using an alternative debugging interface that supports
+linter plugins simply disable [Linter].
 
-2. Install [scss-lint](https://github.com/causes/scss-lint) by typing the following in a terminal:
-   ```
-   gem install scss_lint
-   ```
-   **IMPORTANT**: Since v3.0.0, this package requires version 0.43.0 of scss-lint.
+### `scss-lint` installation
+
+Before using this plugin, you must ensure that `scss-lint` is installed on your
+system. To install `scss-lint`, do the following:
+
+1.  Install [Ruby].
+
+2.  Install [scss-lint] by typing the following in a terminal:
+
+    ```shell
+    gem install scss-lint
+    ```
+
+    **IMPORTANT**: This plugin requires at least v0.43.0 of [scss-lint].
 
 Now you can proceed to install the linter-scss-lint plugin.
 
-#### Plugin installation
-```
-$ apm install linter-scss-lint
-```
+### Plugin installation
 
-### Settings
-You can configure linter-scss-lint by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
-```cson
-'linter-scss-lint':
+To install this plugin either search for it from within Atom's settings menu
+or run the following command:
 
-  # Optionally specify additional arguments to be passed to `scss-lint`.
-  # Run `scss-lint -h` to see available options.
-  'additionalArguments': null
-
-  # Optionally disable `scss-lint` if you don't have an ``.scss-lint.yml` in
-  # your project directory
-  'disableWhenNoConfigFileInPath': false
-
-  # The `scss-lint` path. Run `which scss-lint` to find this path.
-  'executablePath': null
+```shell
+apm install linter-scss-lint
 ```
 
-### Config file
-Linter will start looking for `.scss-lint.yml` file in the same directory as the file that's being linted. If not found, it will move one level up the directory tree all the way up to the filesystem root (If you enabled `disableWhenNoConfigFileInPath`, then it will not search further).
+## Settings
 
+You can configure linter-scss-lint from within Atom's settings menu, or by
+editing `~/.atom/config.cson` file (choose Open Your Config in Atom's menu).
 
-### Using `rvm`
+The following settings are available:
 
-If you are using `rvm`, you will need a wrapper for `scss-lint` to run properly.  There are a couple options for this (see below).
+-   `additionalArguments`: Optionally specify additional arguments to be passed
+    to `scss-lint`. For a full list of the arguments, and their description see
+    [the documentation][scss-lint-usage-docs].
 
-**_NOTE:_** *If you are seeing* `Error: env: ruby_executable_hooks: No such file or directory` *then you need to do this!*
+-   `disableWhenNoConfigFileInPath`: Disable linter when no `.scss-lint.yml` is
+    found in project.
 
-Consult rvm docs for further info not covered in this README - https://rvm.io/
+-   `executablePath`: Defaults to `scss-lint`, allowing the `$PATH` to resolve
+    the correct location. If you need to override this specify the full path to
+    `scss-lint`.
 
-##### Wrapper just for atom
+    You can find the full path to `scss-lint` by running `which scss-lint` (or
+    if you're using [rbenv]: `rbenv which scss-lint`).
 
-This will create a wrapper just for atom using your current ruby version:
+**Note**: This plugin finds the nearest `.scss-lint.yml` file and will
+automatically use it if it exists. If it does not, `scss-lint` will run with its
+default settings.
 
-```bash
-$ rvm wrapper current atom scss-lint
-```
+## Using a version manager?
 
-Then in `linter-scss-lint` set `executablePath` to `/path/to/rvm/bin/atom_scss-lint`
+### Using [rbenv]
 
-*Note: you can find rvm path using* `which rvm`
+If you're using [rbenv], you will need to make sure your `$PATH` is set
+correctly for Atom. From version 1.7 onwards, Atom provides a normalized
+environment so that the correct `$PATH` is available no matter how Atom was
+launched.
 
-##### Wrapper for ruby version
-
-You can also just use the wrapper generated for a particular ruby version.  This may already be generated.  To check:
-
-```bash
-$ ls -al /path/to/rvm/gems/ruby-x.y.z/wrappers
-```
-
-If `scss-lint` isn't in there, generate the wrappers:
-
-```bash
-$ rvm wrapper current
-```
-
-Then in `linter-scss-lint` set `executablePath` to `/path/to/rvm/gems/ruby-x.y.z/wrappers/scss-lint`
-
-### Using `rbenv`
-
-If you're using rbenv, you need to make sure your PATH is set correctly for Atom.  You can do this inside of the `~/.atom/init.coffee` file.
-
-Add a line like this for rbenv (thanks to https://github.com/willcosgrove/atom-ruby-bundler readme):
+If you're running an Atom version that's prior to 1.7, then you can patch the
+environment inside `~/.atom/init.coffee`. Add the following line (thanks to
+[ruby-bundler]):
 
 ```coffee
 process.env.PATH = "#{process.env.HOME}/.rbenv/shims:#{process.env.HOME}/.rbenv/bin:#{process.env.PATH}"
 ```
 
+### Using [RVM]
 
-### Contributing
-If you would like to contribute enhancements or fixes, please do the following:
+If you're using [RVM] and receiving errors in Atom that indicate `scss-lint`
+can't be found, you may need to change `/bin` to `/wrappers` in the path that
+gets returned from `which scss-lint` before using it as your `executablePath`
+setting. For example, change:
 
-1. Fork the plugin repository.
-1. Hack on a separate topic branch created from the latest `master`.
-1. Commit and push the topic branch.
-1. Make a pull request.
-1. welcome to the club
+```text
+/path/to/rvm/gems/ruby-x.y.z/bin/scss-lint
+```
 
-Please note that modifications should follow these coding guidelines:
+To:
 
-- Indent is 2 spaces.
-- Code should pass coffeelint linter.
-- Vertical whitespace helps readability, don’t be afraid to use it.
+```text
+/path/to/rvm/gems/ruby-x.y.z/wrappers/scss-lint
+```
 
-Thank you for helping out!
+**Note**: You can find the path to your [RVM] installation using `which rvm`.
+
+#### Create a scoped wrapper for Atom
+
+You could also create a scoped wrapper by running the following command:
+
+```shell
+rvm wrapper current atom scss-lint
+```
+
+Now you need to set the `executablePath` setting to that of the newly generated
+wrapper.
+
+[atom-package]: https://atom.io/packages/linter-scss-lint
+[david-dm]: https://david-dm.org/AtomLinter/linter-scss-lint
+[linter]: https://github.com/AtomLinter/linter "Linter"
+[rbenv]: https://github/rbenv/rbenv "rbenv"
+[ruby]: https://www.ruby-lang.org "Ruby"
+[ruby-bundler]: https://github.com/willcosgrove/atom-ruby-bundler
+[rvm]: https://rvm.io "RVM"
+[scss-lint]: https://github.com/brigade/scss-lint "scss-lint"
+[scss-lint-usage-docs]: https://github.com/brigade/scss-lint#usage
+[travis-ci]: https://travis-ci.org/AtomLinter/linter-scss-lint
+
+[build-status-image]: https://img.shields.io/travis/AtomLinter/linter-scss-lint/master.svg
+[dependency-status-image]: https://img.shields.io/david/AtomLinter/linter-scss-lint.svg
+[package-downloads-image]: https://img.shields.io/apm/dm/linter-scss-lint.svg
+[package-version-image]: https://img.shields.io/apm/v/linter-scss-lint.svg

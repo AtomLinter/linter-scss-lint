@@ -1,5 +1,5 @@
 {CompositeDisposable} = require 'atom'
-{find, exec} = helpers = require 'atom-linter'
+{find} = helpers = require 'atom-linter'
 path = require 'path'
 
 module.exports =
@@ -50,6 +50,12 @@ module.exports =
         return Promise.resolve([]) if @disableOnNoConfig and not config
 
         cwd = path.dirname(filePath)
+        options = {
+          allowEmptyStderr: true,
+          cwd,
+          ignoreExitCode: true,
+          stdin: fileText,
+        }
         params = [
           "--stdin-file-path=#{filePath}",
           '--format=JSON',
@@ -57,7 +63,7 @@ module.exports =
           @additionalArguments.split(' ')...
         ].filter((e) -> e)
 
-        return helpers.exec(@executablePath, params, {stdin: fileText, cwd})
+        return helpers.exec(@executablePath, params, options)
           .then (output) ->
             try
               return JSON.parse(output)

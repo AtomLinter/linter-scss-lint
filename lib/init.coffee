@@ -51,7 +51,6 @@ module.exports =
 
         cwd = path.dirname(filePath)
         options = {
-          allowEmptyStderr: true,
           cwd,
           ignoreExitCode: true,
           stdin: fileText,

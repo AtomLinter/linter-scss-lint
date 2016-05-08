@@ -11,8 +11,8 @@ used with files that have the "SCSS" syntax.
 ## Installation
 
 The [Linter] package will be installed for you to provide an interface to this
-package. If you are using an alternative debugging interface that supports
-linter plugins simply disable [Linter].
+package. If you are using an alternative linter-* consumer feel free to disable
+the linter package.
 
 ### `scss-lint` installation
 

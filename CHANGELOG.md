@@ -1,13 +1,20 @@
-## master
-* use the JSON scss-lint formatter for better error reporting and scss-lint >=
-  0.39.0 support
-* remove `excludedLinters` option in favor of `additionalArguments` option
+# Change Log
 
-## 0.0.13
-* expose executablePath in settings-view
+## [v3.0.1] - May 7, 2016
 
-## 0.0.12
-* Parse HTML entity characters in output [#19](https://github.com/AtomLinter/linter-scss-lint/pull/19)
+- Pass an absolute file path to STDIN ([#148])
 
-## 0.0.9
-* Add support for the .scss-lint.yml config file
+[v3.0.1]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.0.0...v3.0.1
+[#148]: https://github.com/AtomLinter/linter-scss-lint/pull/148
+
+## [v3.0.0] - May 6, 2016
+
+- Pass file contents to linter via STDIN ([#136])
+
+[v3.0.0]: https://github.com/AtomLinter/linter-scss-lint/compare/v2.5.1...v3.0.0
+[#136]: https://github.com/AtomLinter/linter-scss-lint/pull/136
+
+## Previous versions
+
+The changelog was not maintained in previous versions. See the commit history
+for all changes.

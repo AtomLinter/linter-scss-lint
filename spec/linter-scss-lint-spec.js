@@ -2,14 +2,17 @@
 
 import * as path from 'path';
 
-const lint = require(path.join('..', 'lib', 'init')).provideLinter().lint;
+const linter = require(path.join('..', 'lib', 'init'));
 
 const badPath = path.join(__dirname, 'fixtures', 'bad.scss');
+const configPath = path.join(__dirname, 'fixtures', '.scss-lint.yml');
 const emptyPath = path.join(__dirname, 'fixtures', 'empty.scss');
 const goodPath = path.join(__dirname, 'fixtures', 'good.scss');
 const invalidPath = path.join(__dirname, 'fixtures', 'invalid.scss');
 
 describe('The scss_lint provider for Linter', () => {
+  const lint = linter.provideLinter().lint;
+
   beforeEach(() => {
     atom.workspace.destroyActivePaneItem();
     waitsForPromise(() => {
@@ -34,14 +37,6 @@ describe('The scss_lint provider for Linter', () => {
     beforeEach(() => {
       waitsForPromise(() =>
         atom.workspace.open(badPath).then(openEditor => { editor = openEditor; })
-      );
-    });
-
-    it('finds at least one message', () => {
-      waitsForPromise(() =>
-        lint(editor).then(messages =>
-          expect(messages.length).toBeGreaterThan(0)
-        )
       );
     });
 
@@ -71,14 +66,6 @@ describe('The scss_lint provider for Linter', () => {
     beforeEach(() => {
       waitsForPromise(() =>
         atom.workspace.open(invalidPath).then(openEditor => { editor = openEditor; })
-      );
-    });
-
-    it('finds at least one message', () => {
-      waitsForPromise(() =>
-        lint(editor).then(messages =>
-          expect(messages.length).toBeGreaterThan(0)
-        )
       );
     });
 
@@ -121,5 +108,17 @@ describe('The scss_lint provider for Linter', () => {
         )
       )
     );
+  });
+
+  describe('getRelativeFilePath', () => {
+    it('returns relative file path if config file is found', () => {
+      const relativePath = linter.getRelativeFilePath(goodPath, configPath);
+      expect(relativePath).toEqual('good.scss');
+    });
+
+    it('returns absolute file path if config file is not found', () => {
+      const relativePath = linter.getRelativeFilePath(goodPath);
+      expect(relativePath).toEqual(goodPath);
+    });
   });
 });

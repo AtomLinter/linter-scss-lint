@@ -33,6 +33,12 @@ module.exports =
   deactivate: ->
     @subs.dispose()
 
+  getRelativeFilePath: (filePath, configPath) ->
+    if configPath
+      path.relative(path.dirname(configPath), filePath)
+    else
+      filePath
+
   provideLinter: ->
     provider =
       name: 'scss-lint'
@@ -46,17 +52,17 @@ module.exports =
         return Promise.resolve([]) if fileText.length is 0
 
         config = find filePath, '.scss-lint.yml'
+        relativeFilePath = @getRelativeFilePath(filePath, config)
 
         return Promise.resolve([]) if @disableOnNoConfig and not config
 
-        cwd = path.dirname(filePath)
         options = {
-          cwd,
+          cwd: path.dirname(filePath),
           ignoreExitCode: true,
           stdin: fileText,
         }
         params = [
-          "--stdin-file-path=#{filePath}",
+          "--stdin-file-path=#{relativeFilePath}",
           '--format=JSON',
           if config? then "--config=#{config}",
           @additionalArguments.split(' ')...
@@ -82,8 +88,7 @@ module.exports =
                 })
                 return {}
           .then (contents) ->
-            return [] unless contents[filePath]
-            return contents[filePath].map (msg) ->
+            return (contents[relativeFilePath] or []).map (msg) ->
               badge = "<span class='badge badge-flexible scss-lint'>#{msg.linter}</span> " if msg.linter
 
               # Atom expects ranges to be 0-based

@@ -18,7 +18,7 @@ module.exports =
       default: 'scss-lint'
 
   activate: ->
-    require('atom-package-deps').install()
+    require('atom-package-deps').install('linter-scss-lint')
     @subs = new CompositeDisposable
     @subs.add atom.config.observe 'linter-scss-lint.executablePath',
       (executablePath) =>

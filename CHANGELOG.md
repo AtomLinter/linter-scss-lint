@@ -1,12 +1,19 @@
 # Change Log
 
+## [v3.0.3] - May 10, 2016
+
+- Revert `atom-linter` to previous version range ([#156])
+
+[v3.0.3]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.0.2...v3.0.3
+[#156]: https://github.com/AtomLinter/linter-scss-lint/pull/156
+
 ## [v3.0.2] - May 9, 2016
 
-- Update eslint-config-airbnb-base to version 3.0.0 [#149]
-- Updated the CHANGELOG and README, and added in a CONTRIBUTING file [#150]
-- Update atom-linter to version 5.0.1 [#152]
-- Remove redundant `allowEmptyStderr` option [#153]
-- Revert back to a relative file path (with tests this time) [#154]
+- Update eslint-config-airbnb-base to version 3.0.0 ([#149])
+- Updated the CHANGELOG and README, and added in a CONTRIBUTING file ([#150])
+- Update atom-linter to version 5.0.1 ([#152])
+- Remove redundant `allowEmptyStderr` option ([#153])
+- Revert back to a relative file path (with tests this time) ([#154])
 
 [v3.0.2]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.0.1...v3.0.2
 [#149]: https://github.com/AtomLinter/linter-scss-lint/pull/149
@@ -31,5 +38,5 @@
 
 ## Previous versions
 
-The changelog was not maintained in previous versions. See the commit history
+The change log was not maintained in previous versions. See the commit history
 for all changes.

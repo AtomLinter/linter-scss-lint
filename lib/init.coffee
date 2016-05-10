@@ -58,7 +58,6 @@ module.exports =
 
         options = {
           cwd: path.dirname(filePath),
-          ignoreExitCode: true,
           stdin: fileText,
         }
         params = [

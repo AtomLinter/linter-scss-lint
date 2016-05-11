@@ -24,7 +24,7 @@ system. To install `scss-lint`, do the following:
 2.  Install [scss-lint] by typing the following in a terminal:
 
     ```shell
-    gem install scss-lint
+    gem install scss_lint
     ```
 
     **IMPORTANT**: This plugin requires at least v0.43.0 of [scss-lint].

@@ -1,5 +1,11 @@
 # Change Log
 
+## [v3.0.4] - May 12, 2016
+
+- Update the README to show the required version of `scss-lint`
+
+[v3.0.4]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.0.3...v3.0.4
+
 ## [v3.0.3] - May 10, 2016
 
 - Revert `atom-linter` to previous version range ([#156])

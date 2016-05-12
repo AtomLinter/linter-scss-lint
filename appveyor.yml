@@ -1,33 +1,26 @@
 version: "{build}"
 
-os: Windows Server 2012 R2
 platform: x64
 
 environment:
-  ruby_version: 22-x64
+  APM_TEST_PACKAGES:
+  RUBY_VERSION: 22-x64
   matrix:
     - ATOM_CHANNEL: stable
     - ATOM_CHANNEL: beta
 
 install:
-  - appveyor DownloadFile https://atom.io/download/windows -FileName AtomSetup.exe
-  - AtomSetup.exe /silent
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - SET PATH=%LOCALAPPDATA%\atom\bin;%PATH%
-  - apm clean
-  - apm install
-  - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
+  - ps: Install-Product node 5
+  - SET PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
   - gem update --system
   - gem install scss_lint --no-document
 
-before_test:
-  - apm --version
-  - atom --version
+before_build:
   - ruby --version
   - gem --version
   - scss-lint --version
-test_script:
-  - atom test
+build_script:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/atom/ci/master/build-package.ps1'))
 
 branches:
   only:
@@ -37,5 +30,5 @@ notifications:
   - provider: Email
     on_build_success: false
 
-build: off
 deploy: off
+test: off

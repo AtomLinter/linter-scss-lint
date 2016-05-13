@@ -72,8 +72,9 @@ module.exports =
             try
               return JSON.parse(output)
             catch error
-              regex = /^invalid option: --stdin-file-path\=/
-              if regex.exec(output)
+              regex1 = /^invalid option: --stdin-file-path\=/  # <0.43.0
+              regex2 = /^undefined local variable or method `file'/  # 0.43.0, 0.43.1
+              if regex1.exec(output) or regex2.exec(output)
                 atom.notifications.addError('You are using an old version of scss-lint', {
                   detail: 'Please upgrade your version of scss-lint.\nCheck the README for further information.',
                   dismissable: true

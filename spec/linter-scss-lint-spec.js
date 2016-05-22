@@ -5,7 +5,6 @@ import * as path from 'path';
 const linter = require(path.join('..', 'lib', 'init'));
 
 const badPath = path.join(__dirname, 'fixtures', 'bad.scss');
-const configPath = path.join(__dirname, 'fixtures', '.scss-lint.yml');
 const emptyPath = path.join(__dirname, 'fixtures', 'empty.scss');
 const goodPath = path.join(__dirname, 'fixtures', 'good.scss');
 const invalidPath = path.join(__dirname, 'fixtures', 'invalid.scss');
@@ -108,17 +107,5 @@ describe('The scss_lint provider for Linter', () => {
         )
       )
     );
-  });
-
-  describe('getRelativeFilePath', () => {
-    it('returns relative file path if config file is found', () => {
-      const relativePath = linter.getRelativeFilePath(goodPath, configPath);
-      expect(relativePath).toEqual('good.scss');
-    });
-
-    it('returns absolute file path if config file is not found', () => {
-      const relativePath = linter.getRelativeFilePath(goodPath);
-      expect(relativePath).toEqual(goodPath);
-    });
   });
 });

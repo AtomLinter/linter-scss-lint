@@ -16,6 +16,10 @@ module.exports =
       title: 'Executable Path'
       type: 'string'
       default: 'scss-lint'
+    configName:
+      title: 'Config Name'
+      type: 'string'
+      default: '.scss-lint.yml'
 
   activate: ->
     require('atom-package-deps').install('linter-scss-lint')
@@ -29,6 +33,9 @@ module.exports =
     @subs.add atom.config.observe 'linter-scss-lint.disableWhenNoConfigFileInPath',
       (disableOnNoConfig) =>
         @disableOnNoConfig = disableOnNoConfig
+    @subs.add atom.config.observe 'linter-scss-lint.configName',
+      (configName) =>
+        @configName = configName
 
   deactivate: ->
     @subs.dispose()
@@ -51,7 +58,7 @@ module.exports =
 
         return Promise.resolve([]) if fileText.length is 0
 
-        config = find filePath, '.scss-lint.yml'
+        config = find filePath, @configName
         relativeFilePath = @getRelativeFilePath(filePath, config)
 
         return Promise.resolve([]) if @disableOnNoConfig and not config

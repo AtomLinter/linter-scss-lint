@@ -24,11 +24,11 @@ describe('The scss_lint provider for Linter', () => {
   });
 
   it('should be in the packages list', () =>
-    expect(atom.packages.isPackageLoaded('linter-scss-lint')).toEqual(true)
+    expect(atom.packages.isPackageLoaded('linter-scss-lint')).toBe(true)
   );
 
   it('should be an active package', () =>
-    expect(atom.packages.isPackageActive('linter-scss-lint')).toEqual(true)
+    expect(atom.packages.isPackageActive('linter-scss-lint')).toBe(true)
   );
 
   describe('shows errors in a file with errors', () => {
@@ -45,15 +45,10 @@ describe('The scss_lint provider for Linter', () => {
 
       waitsForPromise(() =>
         lint(editor).then(messages => {
-          expect(messages[0].type).toBeDefined();
-          expect(messages[0].type).toEqual('error');
-          expect(messages[0].html).toBeDefined();
-          expect(messages[0].html).toEqual(messageHtml);
+          expect(messages[0].type).toBe('error');
+          expect(messages[0].html).toBe(messageHtml);
           expect(messages[0].text).not.toBeDefined();
-          expect(messages[0].filePath).toBeDefined();
-          expect(messages[0].filePath).toEqual(badPath);
-          expect(messages[0].range).toBeDefined();
-          expect(messages[0].range.length).toEqual(2);
+          expect(messages[0].filePath).toBe(badPath);
           expect(messages[0].range).toEqual([[1, 0], [1, 1]]);
         })
       );
@@ -75,15 +70,10 @@ describe('The scss_lint provider for Linter', () => {
 
       waitsForPromise(() =>
         lint(editor).then(messages => {
-          expect(messages[0].type).toBeDefined();
-          expect(messages[0].type).toEqual('warning');
-          expect(messages[0].html).toBeDefined();
-          expect(messages[0].html).toEqual(messageHtml);
+          expect(messages[0].type).toBe('warning');
+          expect(messages[0].html).toBe(messageHtml);
           expect(messages[0].text).not.toBeDefined();
-          expect(messages[0].filePath).toBeDefined();
-          expect(messages[0].filePath).toEqual(invalidPath);
-          expect(messages[0].range).toBeDefined();
-          expect(messages[0].range.length).toEqual(2);
+          expect(messages[0].filePath).toBe(invalidPath);
           expect(messages[0].range).toEqual([[1, 20], [1, 23]]);
         })
       );
@@ -94,7 +84,7 @@ describe('The scss_lint provider for Linter', () => {
     waitsForPromise(() =>
       atom.workspace.open(emptyPath).then(editor =>
         lint(editor).then(messages =>
-          expect(messages.length).toEqual(0)
+          expect(messages.length).toBe(0)
         )
       )
     );
@@ -104,7 +94,7 @@ describe('The scss_lint provider for Linter', () => {
     waitsForPromise(() =>
       atom.workspace.open(goodPath).then(editor =>
         lint(editor).then(messages =>
-          expect(messages.length).toEqual(0)
+          expect(messages.length).toBe(0)
         )
       )
     );
@@ -113,12 +103,12 @@ describe('The scss_lint provider for Linter', () => {
   describe('getRelativeFilePath', () => {
     it('returns relative file path if config file is found', () => {
       const relativePath = linter.getRelativeFilePath(goodPath, configPath);
-      expect(relativePath).toEqual('good.scss');
+      expect(relativePath).toBe('good.scss');
     });
 
     it('returns absolute file path if config file is not found', () => {
       const relativePath = linter.getRelativeFilePath(goodPath);
-      expect(relativePath).toEqual(goodPath);
+      expect(relativePath).toBe(goodPath);
     });
   });
 });

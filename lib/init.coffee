@@ -66,6 +66,7 @@ module.exports =
         options = {
           cwd: path.dirname(filePath),
           stdin: fileText,
+          ignoreExitCode: true,
         }
         params = [
           "--stdin-file-path=#{relativeFilePath}",

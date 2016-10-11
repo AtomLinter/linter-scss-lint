@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-const linter = require('../lib/init.coffee');
+const linter = require('../lib/init.js');
 
 const badPath = path.join(__dirname, 'fixtures', 'bad.scss');
 const configPath = path.join(__dirname, 'fixtures', '.scss-lint.yml');

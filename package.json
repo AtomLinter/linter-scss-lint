@@ -38,11 +38,10 @@
       "atom": true
     },
     "env": {
-      "es6": true,
       "node": true
     },
     "rules": {
-      "global-require": 0
+      "global-require": "off"
     }
   },
   "coffeelintConfig": {

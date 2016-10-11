@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-const linter = require(path.join('..', 'lib', 'init'));
+const linter = require('../lib/init.coffee');
 
 const badPath = path.join(__dirname, 'fixtures', 'bad.scss');
 const configPath = path.join(__dirname, 'fixtures', '.scss-lint.yml');
@@ -36,7 +36,7 @@ describe('The scss_lint provider for Linter', () => {
 
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(badPath).then(openEditor => { editor = openEditor; })
+        atom.workspace.open(badPath).then((openEditor) => { editor = openEditor; })
       );
     });
 
@@ -44,7 +44,7 @@ describe('The scss_lint provider for Linter', () => {
       const messageHtml = 'Syntax Error: Invalid CSS after "body {": expected "}", was ""';
 
       waitsForPromise(() =>
-        lint(editor).then(messages => {
+        lint(editor).then((messages) => {
           expect(messages[0].type).toBe('error');
           expect(messages[0].html).toBe(messageHtml);
           expect(messages[0].text).not.toBeDefined();
@@ -60,7 +60,7 @@ describe('The scss_lint provider for Linter', () => {
 
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(invalidPath).then(openEditor => { editor = openEditor; })
+        atom.workspace.open(invalidPath).then((openEditor) => { editor = openEditor; })
       );
     });
 
@@ -69,7 +69,7 @@ describe('The scss_lint provider for Linter', () => {
                           'Color `red` should be written in hexadecimal form as `#ff0000`';
 
       waitsForPromise(() =>
-        lint(editor).then(messages => {
+        lint(editor).then((messages) => {
           expect(messages[0].type).toBe('warning');
           expect(messages[0].html).toBe(messageHtml);
           expect(messages[0].text).not.toBeDefined();

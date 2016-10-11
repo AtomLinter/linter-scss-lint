@@ -15,12 +15,14 @@ describe('The scss_lint provider for Linter', () => {
 
   beforeEach(() => {
     atom.workspace.destroyActivePaneItem();
-    waitsForPromise(() => {
-      atom.packages.activatePackage('linter-scss-lint');
-      return atom.packages.activatePackage('language-sass').then(() =>
+    waitsForPromise(() =>
+      Promise.all([
+        atom.packages.activatePackage('linter-scss-lint'),
+        atom.packages.activatePackage('language-sass'),
+      ]).then(() =>
         atom.workspace.open(goodPath)
-      );
-    });
+      )
+    );
   });
 
   it('should be in the packages list', () =>

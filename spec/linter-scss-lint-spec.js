@@ -20,17 +20,17 @@ describe('The scss_lint provider for Linter', () => {
         atom.packages.activatePackage('linter-scss-lint'),
         atom.packages.activatePackage('language-sass'),
       ]).then(() =>
-        atom.workspace.open(goodPath)
-      )
+        atom.workspace.open(goodPath),
+      ),
     );
   });
 
   it('should be in the packages list', () =>
-    expect(atom.packages.isPackageLoaded('linter-scss-lint')).toBe(true)
+    expect(atom.packages.isPackageLoaded('linter-scss-lint')).toBe(true),
   );
 
   it('should be an active package', () =>
-    expect(atom.packages.isPackageActive('linter-scss-lint')).toBe(true)
+    expect(atom.packages.isPackageActive('linter-scss-lint')).toBe(true),
   );
 
   describe('shows errors in a file with errors', () => {
@@ -38,7 +38,7 @@ describe('The scss_lint provider for Linter', () => {
 
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(badPath).then((openEditor) => { editor = openEditor; })
+        atom.workspace.open(badPath).then((openEditor) => { editor = openEditor; }),
       );
     });
 
@@ -52,7 +52,7 @@ describe('The scss_lint provider for Linter', () => {
           expect(messages[0].text).not.toBeDefined();
           expect(messages[0].filePath).toBe(badPath);
           expect(messages[0].range).toEqual([[1, 0], [1, 1]]);
-        })
+        }),
       );
     });
   });
@@ -62,7 +62,7 @@ describe('The scss_lint provider for Linter', () => {
 
     beforeEach(() => {
       waitsForPromise(() =>
-        atom.workspace.open(invalidPath).then((openEditor) => { editor = openEditor; })
+        atom.workspace.open(invalidPath).then((openEditor) => { editor = openEditor; }),
       );
     });
 
@@ -77,7 +77,7 @@ describe('The scss_lint provider for Linter', () => {
           expect(messages[0].text).not.toBeDefined();
           expect(messages[0].filePath).toBe(invalidPath);
           expect(messages[0].range).toEqual([[1, 20], [1, 23]]);
-        })
+        }),
       );
     });
   });
@@ -86,9 +86,9 @@ describe('The scss_lint provider for Linter', () => {
     waitsForPromise(() =>
       atom.workspace.open(emptyPath).then(editor =>
         lint(editor).then(messages =>
-          expect(messages.length).toBe(0)
-        )
-      )
+          expect(messages.length).toBe(0),
+        ),
+      ),
     );
   });
 
@@ -96,9 +96,9 @@ describe('The scss_lint provider for Linter', () => {
     waitsForPromise(() =>
       atom.workspace.open(goodPath).then(editor =>
         lint(editor).then(messages =>
-          expect(messages.length).toBe(0)
-        )
-      )
+          expect(messages.length).toBe(0),
+        ),
+      ),
     );
   });
 

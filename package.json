@@ -25,6 +25,12 @@
       "title": "Config Name",
       "type": "string",
       "default": ".scss-lint.yml"
+    },
+    "disableTimeout": {
+      "title": "Disable Execution Timeout",
+      "type": "boolean",
+      "default": false,
+      "description": "Exection of `scss-lint` times out after 10 seconds by default, this disables that timeout."
     }
   },
   "scripts": {

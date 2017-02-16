@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.1.0][] - February 15, 2017
+
+-   Fix out of date message ([#161][])
+-   Add config file name option ([#168][])
+-   Rewrite in ES2017 ([#195][])
+-   Allow disabling the execution timeout ([#203][])
+-   Many dependency updates
+
+[#161]: https://github.com/AtomLinter/linter-scss-lint/pull/161
+[#168]: https://github.com/AtomLinter/linter-scss-lint/pull/168
+[#195]: https://github.com/AtomLinter/linter-scss-lint/pull/195
+[#203]: https://github.com/AtomLinter/linter-scss-lint/pull/203
+
+[v3.1.0]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.0.4...v3.1.0
+
 ## [v3.0.4][] - May 12, 2016
 
 -   Update the README to show the required version of `scss-lint`

@@ -1,7 +1,7 @@
 {
   "name": "linter-scss-lint",
   "main": "./lib/init.js",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Lint SCSS on the fly, using scss-lint",
   "repository": "https://github.com/AtomLinter/linter-scss-lint",
   "license": "MIT",

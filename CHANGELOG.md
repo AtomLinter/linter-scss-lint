@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.1.1][] - August 28, 2017
+
+-   Update dependencies ([#208][], [#211][])
+
+[#208]: https://github.com/AtomLinter/linter-scss-lint/pull/208
+[#211]: https://github.com/AtomLinter/linter-scss-lint/pull/211
+
 ## [v3.1.0][] - February 15, 2017
 
 -   Fix out of date message ([#161][])

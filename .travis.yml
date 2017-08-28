@@ -4,31 +4,12 @@ language: ruby
 matrix:
   include:
     - os: linux
-      rvm: 2.2.3
+      rvm: 2.3.1
       env: ATOM_CHANNEL=stable
-      before_install:
-        # Installed for linting the project
-        - nvm install node
 
     - os: linux
-      rvm: 2.2.3
+      rvm: 2.3.1
       env: ATOM_CHANNEL=beta
-      before_install:
-        # Installed for linting the project
-        - nvm install node
-
-    - os: osx
-      rvm: 2.2.3
-      env: ATOM_CHANNEL=stable
-      before_install:
-        - brew update
-        # Installed for linting the project
-        - brew outdated node || brew upgrade node
-
-env:
-  global:
-    - APM_TEST_PACKAGES=""
-    - ATOM_LINT_WITH_BUNDLED_NODE="false"
 
 install:
   - gem install scss_lint
@@ -37,7 +18,10 @@ before_script:
   - scss-lint --version
 
 ### Generic setup follows ###
-script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
+script:
+  - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
+  - chmod u+x build-package.sh
+  - ./build-package.sh
 
 notifications:
   email:
@@ -53,10 +37,12 @@ git:
 
 sudo: false
 
+dist: trusty
+
 addons:
   apt:
     packages:
     - build-essential
-    - git
-    - libgnome-keyring-dev
     - fakeroot
+    - git
+    - libsecret-1-dev

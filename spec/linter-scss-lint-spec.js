@@ -31,26 +31,27 @@ describe('The scss_lint provider for Linter', () => {
   it('shows messages in a file with errors', async () => {
     const editor = await atom.workspace.open(badPath);
     const messages = await lint(editor);
-    const messageHtml = 'Syntax Error: Invalid CSS after "body {": expected "}", was ""';
+    const messageHtml = 'Syntax: ' +
+      'Syntax Error: Invalid CSS after "body {": expected "}", was ""';
 
-    expect(messages[0].type).toBe('error');
-    expect(messages[0].html).toBe(messageHtml);
-    expect(messages[0].text).not.toBeDefined();
-    expect(messages[0].filePath).toBe(badPath);
-    expect(messages[0].range).toEqual([[1, 0], [1, 1]]);
+    expect(messages[0].severity).toBe('error');
+    expect(messages[0].excerpt).toBe(messageHtml);
+    expect(messages[0].description).not.toBeDefined();
+    expect(messages[0].location.file).toBe(badPath);
+    expect(messages[0].location.position).toEqual([[1, 0], [1, 1]]);
   });
 
   it('shows messages in a file with warnings', async () => {
     const editor = await atom.workspace.open(invalidPath);
     const messages = await lint(editor);
-    const messageHtml = "<span class='badge badge-flexible scss-lint'>ColorKeyword</span> " +
-                        'Color `red` should be written in hexadecimal form as `#ff0000`';
+    const messageHtml = 'ColorKeyword: ' +
+      'Color `red` should be written in hexadecimal form as `#ff0000`';
 
-    expect(messages[0].type).toBe('warning');
-    expect(messages[0].html).toBe(messageHtml);
-    expect(messages[0].text).not.toBeDefined();
-    expect(messages[0].filePath).toBe(invalidPath);
-    expect(messages[0].range).toEqual([[1, 20], [1, 23]]);
+    expect(messages[0].severity).toBe('warning');
+    expect(messages[0].excerpt).toBe(messageHtml);
+    expect(messages[0].description).not.toBeDefined();
+    expect(messages[0].location.file).toBe(invalidPath);
+    expect(messages[0].location.position).toEqual([[1, 20], [1, 23]]);
   });
 
   it('finds nothing wrong with an empty file', async () => {

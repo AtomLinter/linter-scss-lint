@@ -51,12 +51,12 @@
     "jasmine-fix": "^1.3.0"
   },
   "package-deps": [
-    "linter"
+    "linter:2.0.0"
   ],
   "providedServices": {
     "linter": {
       "versions": {
-        "1.1.0": "provideLinter"
+        "2.0.0": "provideLinter"
       }
     }
   },

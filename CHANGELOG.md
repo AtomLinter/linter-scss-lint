@@ -1,11 +1,19 @@
 # Change Log
 
+## [v3.2.0][] - January 20, 2019
+
+-   Update to linter v2 API ([#225][])
+
+[#225]: https://github.com/AtomLinter/linter-scss-lint/pull/225
+[v3.2.0]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.1.1...v3.2.0
+
 ## [v3.1.1][] - August 28, 2017
 
 -   Update dependencies ([#208][], [#211][])
 
 [#208]: https://github.com/AtomLinter/linter-scss-lint/pull/208
 [#211]: https://github.com/AtomLinter/linter-scss-lint/pull/211
+[v3.1.1]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.1.0...v3.1.1
 
 ## [v3.1.0][] - February 15, 2017
 

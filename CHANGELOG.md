@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.2.1][] - January 21, 2019
+
+-   lintsOnChange wasn't defined ([#227][])
+
+[#227]: https://github.com/AtomLinter/linter-scss-lint/pull/227
+[v3.2.1]: https://github.com/AtomLinter/linter-scss-lint/compare/v3.2.0...v3.2.1
+
 ## [v3.2.0][] - January 20, 2019
 
 -   Update to linter v2 API ([#225][])

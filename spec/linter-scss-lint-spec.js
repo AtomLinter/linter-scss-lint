@@ -1,7 +1,9 @@
 'use babel';
 
-// eslint-disable-next-line no-unused-vars
-import { it, fit, wait, beforeEach, afterEach } from 'jasmine-fix';
+import {
+  // eslint-disable-next-line no-unused-vars
+  it, fit, wait, beforeEach, afterEach,
+} from 'jasmine-fix';
 import * as path from 'path';
 
 const linter = require('../lib/init.js');
@@ -22,17 +24,19 @@ describe('The scss_lint provider for Linter', () => {
     await atom.workspace.open(goodPath);
   });
 
-  it('should be in the packages list', () =>
-    expect(atom.packages.isPackageLoaded('linter-scss-lint')).toBe(true));
+  it('should be in the packages list', () => {
+    expect(atom.packages.isPackageLoaded('linter-scss-lint')).toBe(true);
+  });
 
-  it('should be an active package', () =>
-    expect(atom.packages.isPackageActive('linter-scss-lint')).toBe(true));
+  it('should be an active package', () => {
+    expect(atom.packages.isPackageActive('linter-scss-lint')).toBe(true);
+  });
 
   it('shows messages in a file with errors', async () => {
     const editor = await atom.workspace.open(badPath);
     const messages = await lint(editor);
-    const messageHtml = 'Syntax: ' +
-      'Syntax Error: Invalid CSS after "body {": expected "}", was ""';
+    const messageHtml = 'Syntax: '
+      + 'Syntax Error: Invalid CSS after "body {": expected "}", was ""';
 
     expect(messages[0].severity).toBe('error');
     expect(messages[0].excerpt).toBe(messageHtml);
@@ -44,8 +48,8 @@ describe('The scss_lint provider for Linter', () => {
   it('shows messages in a file with warnings', async () => {
     const editor = await atom.workspace.open(invalidPath);
     const messages = await lint(editor);
-    const messageHtml = 'ColorKeyword: ' +
-      'Color `red` should be written in hexadecimal form as `#ff0000`';
+    const messageHtml = 'ColorKeyword: '
+      + 'Color `red` should be written in hexadecimal form as `#ff0000`';
 
     expect(messages[0].severity).toBe('warning');
     expect(messages[0].excerpt).toBe(messageHtml);

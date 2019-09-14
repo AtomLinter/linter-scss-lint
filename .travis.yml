@@ -4,11 +4,11 @@ language: ruby
 matrix:
   include:
     - os: linux
-      rvm: 2.3.1
+      rvm: 2.6
       env: ATOM_CHANNEL=stable
 
     - os: linux
-      rvm: 2.3.1
+      rvm: 2.6
       env: ATOM_CHANNEL=beta
 
 install:

@@ -46,16 +46,40 @@ describe('The scss_lint provider for Linter', () => {
   });
 
   it('shows messages in a file with warnings', async () => {
+    const colorKeyword = 'ColorKeyword: '
+      + 'Color `red` should be written in hexadecimal form as `#ff0000`';
+    const colorVariable = 'ColorVariable: Color literals like `red` should only be used in '
+      + 'variable declarations; they should be referred to via variable '
+      + 'everywhere else.';
+    const expected = new Map();
+    expected.set(colorKeyword,
+      {
+        severity: 'warning',
+        excerpt: colorKeyword,
+        location: {
+          file: invalidPath,
+          position: [[1, 20], [1, 23]],
+        },
+      });
+    expected.set(colorVariable,
+      {
+        severity: 'warning',
+        excerpt: colorVariable,
+        location: {
+          file: invalidPath,
+          position: [[1, 20], [1, 23]],
+        },
+      });
+
     const editor = await atom.workspace.open(invalidPath);
     const messages = await lint(editor);
-    const messageHtml = 'ColorKeyword: '
-      + 'Color `red` should be written in hexadecimal form as `#ff0000`';
 
-    expect(messages[0].severity).toBe('warning');
-    expect(messages[0].excerpt).toBe(messageHtml);
-    expect(messages[0].description).not.toBeDefined();
-    expect(messages[0].location.file).toBe(invalidPath);
-    expect(messages[0].location.position).toEqual([[1, 20], [1, 23]]);
+    messages.forEach((message) => {
+      if (!expected.has(message.excerpt)) {
+        expect(true).toBe(false);
+      }
+      expect(message).toEqual(expected.get(message.excerpt));
+    });
   });
 
   it('finds nothing wrong with an empty file', async () => {
